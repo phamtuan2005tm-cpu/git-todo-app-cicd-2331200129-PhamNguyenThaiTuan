@@ -24,6 +24,12 @@ describe('Controller-Service Integration Tests', () => {
         // Then, get the list of todos directly from the service.
         // Assert that the service's todos array has a length of 1.
         // Assert that the text of the first todo in the service matches the input.
+        // Hành động: Gọi hàm handleAddTodo của controller
+    controller.handleAddTodo('Integration Test Task');
+
+    // Xác nhận: Model (service) phải nhận được dữ liệu này
+    expect(service.todos.length).toBe(1);
+    expect(service.todos[0].text).toBe('Integration Test Task');
     });
 
     test('handleRemoveTodo should call service.removeTodo and update the model', () => {
@@ -31,5 +37,14 @@ describe('Controller-Service Integration Tests', () => {
         // Get the ID of the new todo.
         // Call the controller's handleRemoveTodo method with that ID.
         // Assert that the service's todos array is now empty.
+        // Chuẩn bị: Thêm 1 task trước
+    service.addTodo('Task để xóa');
+    const todoId = service.todos[0].id;
+
+    // Hành động: Gọi hàm xóa của controller
+    controller.handleRemoveTodo(todoId);
+
+    // Xác nhận: Model phải trống
+    expect(service.todos.length).toBe(0);
     });
 });

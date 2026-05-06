@@ -12,12 +12,31 @@ describe('TodoService Unit Tests', () => {
 
     test('should add a new todo', () => {
         // TODO: Call the addTodo method with some text.
+        service.addTodo('Learn Unit Testing with Thai Tuan');
+    
+        // Kiểm tra xem mảng todos có độ dài là 1 không
+        expect(service.todos.length).toBe(1);
+        // Kiểm tra nội dung có đúng không
+        expect(service.todos[0].text).toBe('Learn Unit Testing with Thai Tuan');
         // Then, assert that the service's todos array has a length of 1.
         // Assert that the text of the first todo matches the input text.
     });
 
     test('should toggle the completed state of a todo', () => {
         // TODO: First, add a todo.
+        // Bước 1: Thêm một công việc mới (mặc định completed sẽ là false)
+    service.addTodo('Học cách viết Test');
+    const todoId = service.todos[0].id; // Lấy ID của công việc vừa thêm
+
+    // Bước 2: Thực hiện hành động Toggle
+    service.toggleTodoComplete(todoId);
+
+    // Bước 3: Xác nhận trạng thái đã chuyển sang true
+    expect(service.todos[0].completed).toBe(true);
+
+    // Bước 4: (Tùy chọn) Toggle thêm lần nữa để xem nó có về false không
+    service.toggleTodoComplete(todoId);
+    expect(service.todos[0].completed).toBe(false);
         // Then, get its ID and call the toggleTodoComplete method.
         // Assert that the 'completed' property of that todo is now true.
         // Call toggleTodoComplete again and assert that it's false.

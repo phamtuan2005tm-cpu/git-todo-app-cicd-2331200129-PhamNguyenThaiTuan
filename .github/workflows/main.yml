@@ -7,6 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
+
   test:
     runs-on: ubuntu-latest
     steps:
@@ -18,3 +19,17 @@ jobs:
       - run: npm install
       - run: npm run test:unit
       - run: npm run test:integration
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - run: npm run build --if-present 
+      - name: Build success message
+        run: echo "Build job completed successfully!"
